@@ -1,8 +1,3 @@
-/*課題28
-文字列を９文字入力させる。
-同一文字が３文字以上連続する場合に、「文字」と「連続文字数」に置き換え、
-出力する。3文字以上連続しない文字はそのまま出力する。*/
-
 package kadai;
 
 import java.io.BufferedReader;
@@ -19,13 +14,14 @@ public class Kadai28_main {
 		List<String> list = new ArrayList<String>();
 		int count = 0;
 		String same = null;
-		System.out.println("9回文字を入力してください。");
 		try {
+			System.out.println("9回文字を入力してください。");
 			for (int i = 0; i < 9; i++) {
 				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 				String chara = br.readLine();
-				charas[i] = chara;
-
+				if (chara.length() == 1) {
+					charas[i] = chara;
+				}
 			}
 			charas[9] = "";
 			for (int i = 0; i < 10; i++) {
@@ -39,17 +35,22 @@ public class Kadai28_main {
 					list.add(same + str);
 					same = charas[i];
 					count = 1;
+				} else if (!(charas[i].equals(same)) && count == 2) {
+					list.add(same);
+					list.add(charas[i - 1]);
+					same = charas[i];
+					count = 1;
 				} else {
 					list.add(same);
 					same = charas[i];
+					count = 1;
 				}
 			}
 			for (int i = 0; i < list.size(); ++i) {
 				System.out.print(list.get(i));
 			}
-
 		} catch (Exception e) {
-			System.out.println("エラーが発生しました。");
+			System.out.println("エラーが発生しました。もう一度入力してください");
 		}
 	}
 }
